@@ -1,0 +1,6 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Terjadi masalah</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body style="background:#2d6bd1;display:grid;place-items:center;min-height:100vh;padding:16px">
+<div class="card" style="max-width:480px"><h2>⚠️ Terjadi masalah</h2><p>{{ pesan }}</p>
+<p class="note">Jika kamu pemilik web ini: periksa Environment Variables di Vercel dan tabel di Supabase.</p>
+<a class="btn" href="{{ url_for('index') }}">Coba lagi</a></div></body></html>

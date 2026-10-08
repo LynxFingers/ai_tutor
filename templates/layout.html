@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1d5fd0"><title>{{ subtitle }} – AI Tutor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body>
+<div class="app">
+<aside class="side">
+  <div class="brand"><span class="logo">🌱</span><div><b>AI Tutor</b><small>Materi Berita</small></div></div>
+  <button class="cta" id="cta" data-t="{{ cta[1] }}">{{ cta[0] }}</button>
+  <nav class="sn">
+    {% for id,ic,lb in items %}<button class="ni{{ ' on' if loop.first }}" data-t="{{ id }}"><span>{{ ic }}</span>{{ lb }}</button>{% endfor %}
+    {% if extra %}<div class="sep">Tautan cepat</div>
+    {% for ic,lb,url in extra %}<a class="ni" href="{{ url }}" target="_blank" rel="noopener"><span>{{ ic }}</span>{{ lb }}</a>{% endfor %}{% endif %}
+  </nav>
+  {% block sbfoot %}{% endblock %}
+  <a class="ni out" href="{{ url_for('logout') }}" onclick="return confirm('Yakin ingin keluar?')"><span>🚪</span>Keluar</a>
+</aside>
+<div class="main">
+  <header class="tbar">
+    <div class="mb"><span class="logo">🌱</span><b>AI Tutor</b></div>
+    <label class="search"><span>🔍</span><input id="gs" type="search" placeholder="{{ 'Cari siswa...' if user.role=='guru' else 'Tanya atau cari materi...' }}" enterkeyhint="search"></label>
+    <div class="usr"><div class="un"><b>{{ user.nama.split()[0] }}</b><small>{{ user.role|capitalize }}</small></div><div class="av">{{ user.nama[0]|upper }}</div>
+      <a class="outb" href="{{ url_for('logout') }}" onclick="return confirm('Yakin ingin keluar?')">Keluar</a></div>
+  </header>
+  {% block content %}{% endblock %}
+</div>
+<nav class="bnav">{% for id,ic,lb in items %}<button class="bn{{ ' on' if loop.first }}" data-t="{{ id }}"><span>{{ ic }}</span>{{ lb }}</button>{% endfor %}</nav>
+</div>
+<script>
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function post(u,d){return fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(d)})}
+function showTab(t){
+  document.querySelectorAll("[data-t]").forEach(function(b){b.classList.toggle("on",b.dataset.t===t&&!b.classList.contains("cta")&&!b.classList.contains("qc"))});
+  document.querySelectorAll(".tab").forEach(function(s){s.classList.toggle("on",s.id==="t-"+t)});
+  window.scrollTo(0,0);if(history.replaceState)history.replaceState(null,"","#"+t);
+}
+document.querySelectorAll("[data-t]").forEach(function(b){b.onclick=function(){showTab(b.dataset.t)}});
+var h=location.hash.slice(1);if(h&&$("t-"+h))showTab(h);
+$("gs").oninput=function(){if(window.onSearch&&document.body.dataset.live)onSearch(this.value,false)};
+$("gs").onkeydown=function(e){if(e.key==="Enter"&&window.onSearch){onSearch(this.value,true)}};
+</script>
+{% block script %}{% endblock %}
+<script>if(document.getElementById("t-kelas"))document.body.dataset.live="1";</script>
+</body></html>

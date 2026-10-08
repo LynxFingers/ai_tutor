@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+<section id="t-ringkasan" class="tab on">
+  <h1 class="pt">Ringkasan <span class="pb">Halo, {{ user.nama.split()[0] }} 👋</span></h1>
+  <div class="sl">Quick Access</div>
+  <div class="qg">
+    <button class="qc hot" data-t="kelas"><span class="qt">KELAS</span><i>👥</i><b>Isi Kelas</b><small>Daftar siswa</small></button>
+    <button class="qc" data-t="tanya"><span class="qt">AI TUTOR</span><i>💬</i><b>Pertanyaan</b><small>Dari siswa</small></button>
+    <button class="qc" data-t="rubrik"><span class="qt">SPREADSHEET</span><i>📊</i><b>Rubrik</b><small>Penilaian</small></button>
+  </div>
+  <div class="stats"><div class="stat"><b id="s1">0</b><small>Siswa</small></div><div class="stat"><b id="s2">0%</b><small>Rata-rata progres</small></div><div class="stat"><b id="s3">0</b><small>Pertanyaan AI</small></div></div>
+  <div class="sl">Penyelesaian per modul</div>
+  <div class="card"><div id="pmod"></div></div>
+</section>
+<section id="t-kelas" class="tab"><h1 class="pt">Isi Kelas <button class="btn alt sm" id="muat">🔄 Muat ulang</button></h1>
+  <p class="note">Ketuk siswa untuk melihat progres dan pertanyaannya. Gunakan kolom pencarian di atas untuk mencari siswa.</p>
+  <div class="sh"><span>Nama</span><span>Progres</span><span>Pertanyaan</span><span>Terakhir masuk</span></div><div id="sg"></div></section>
+<section id="t-tanya" class="tab"><div class="card"><h2>💬 Pertanyaan Terbaru ke AI</h2><p class="note">40 pertanyaan terakhir dari seluruh siswa.</p><div class="feed" id="feed"></div></div></section>
+<section id="t-rubrik" class="tab"><h1 class="pt">Rubrik Penilaian</h1>
+  <div class="card"><p>Rubrik penilaian pembelajaran tersedia pada Google Spreadsheet.</p>
+  <p><a class="btn" href="{{ links.rubrik }}" target="_blank" rel="noopener">📊 Buka Rubrik Penilaian</a></p>
+  <p class="note">Jika pratinjau di bawah tidak tampil, pastikan kamu sudah login Google atau buka lewat tombol di atas.</p></div>
+  <iframe class="sheet" src="{{ rubrik_embed }}" title="Rubrik Penilaian" loading="lazy"></iframe></section>
+<div id="dlg"><div class="card" id="dc"></div></div>
+{% endblock %}
+{% block sbfoot %}<div class="sbf"><small>PROGRES KELAS</small><div class="bar"><i id="sbp"></i></div><small id="sbt"></small></div>{% endblock %}
+{% block script %}
+<script>
+var D=[],TM={{ total_modul }},NM={"pengertian":"Pengertian","struktur":"Struktur","unsur":"Unsur 5W+1H","kaidah":"Kaidah Kebahasaan","jenis":"Jenis Berita","cara":"Cara Membuat Berita","contoh":"Contoh & Video","lkpd":"LKPD","evaluasi":"Evaluasi"};
+var FQ="";
+function daftar(){var f=FQ.toLowerCase();
+  var r=D.filter(function(s){return (s.nama+" "+s.username).toLowerCase().indexOf(f)>=0});
+  $("sg").innerHTML=r.map(function(s){var p=Math.round(s.selesai/TM*100);
+    return '<button class="sc" data-id="'+s.id+'"><div class="h"><div class="av">'+esc(s.nama[0]||"?").toUpperCase()+'</div><div><b>'+esc(s.nama)+'</b><small>@'+esc(s.username)+'</small></div></div><div class="pc"><div class="bar"><i style="width:'+p+'%"></i></div><small>'+s.selesai+'/'+TM+' modul</small></div><div class="qn">💬 '+s.tanya+'</div><div class="lg">'+esc((s.last_login||"-"))+'</div></button>'}).join("")||'<div class="card">Belum ada siswa yang cocok.</div>';
+  document.querySelectorAll(".sc").forEach(function(b){b.onclick=function(){detail(b.dataset.id)}})}
+window.onSearch=function(v,enter){FQ=v;daftar();if(enter)showTab("kelas")};
+function muat(){
+  fetch("/api/kelas").then(function(r){return r.json()}).then(function(d){D=d.siswa;TM=d.total_modul;
+    $("s1").textContent=D.length;var t=0,q=0;D.forEach(function(s){t+=s.selesai;q+=s.tanya});
+    var ap=D.length?Math.round(t/(D.length*TM)*100):0;$("s2").textContent=ap+"%";$("sbp").style.width=ap+"%";$("sbt").textContent="Rata-rata kelas "+ap+"%";$("s3").textContent=q;
+    $("pmod").innerHTML=d.per_modul.map(function(m){var p=D.length?Math.round(m.n/D.length*100):0;return '<div class="pm"><span>'+esc(NM[m.id]||m.id)+'</span><div class="bar"><i style="width:'+p+'%"></i></div><em>'+m.n+'</em></div>'}).join("");daftar()});
+  fetch("/api/pertanyaan").then(function(r){return r.json()}).then(function(d){
+    $("feed").innerHTML=d.pertanyaan.map(function(p){return '<div class="q"><b>'+esc(p.nama)+'</b> <small>'+esc(p.created_at)+'</small><br>'+esc(p.q)+'</div>'}).join("")||"<p>Belum ada pertanyaan.</p>"})}
+function detail(id){fetch("/api/siswa/"+id).then(function(r){return r.json()}).then(function(d){
+  var s=d.siswa,h="<h2>"+esc(s.nama)+"</h2><p class='note'>@"+esc(s.username)+" • terdaftar "+esc(s.created_at)+" • terakhir masuk "+esc(s.last_login||"-")+"</p>";
+  h+="<h3 style='margin-top:14px'>Progres modul ("+d.selesai.length+"/"+TM+")</h3><p>"+(d.selesai.length?d.selesai.map(function(x){return "✓ "+esc(NM[x]||x)}).join(", "):"Belum ada modul yang diselesaikan.")+"</p>";
+  h+="<h3 style='margin-top:14px'>Pertanyaan ke AI</h3>"+(d.pertanyaan.length?"<ul>"+d.pertanyaan.map(function(p){return "<li>"+esc(p.q)+" <small>("+esc(p.created_at)+")</small></li>"}).join("")+"</ul>":"<p>Belum ada pertanyaan.</p>");
+  h+='<p><button class="btn" id="tt" style="width:100%">Tutup</button></p>';$("dc").innerHTML=h;$("dlg").classList.add("on");$("tt").onclick=function(){$("dlg").classList.remove("on")}})}
+$("dlg").onclick=function(e){if(e.target===this)this.classList.remove("on")};
+$("muat").onclick=muat;muat();
+</script>
+{% endblock %}

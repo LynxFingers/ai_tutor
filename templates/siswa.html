@@ -1,0 +1,165 @@
+{% extends "layout.html" %}
+{% block content %}
+<section id="t-beranda" class="tab on">
+  <h1 class="pt">Beranda <span class="pb">Halo, {{ user.nama.split()[0] }} 👋</span></h1>
+  <div class="sl">Quick Access</div>
+  <div class="qg">
+    <a class="qc hot" href="{{ links.absen }}" target="_blank" rel="noopener"><span class="qt">GOOGLE FORM</span><i>📝</i><b>Absen</b><small>Isi daftar hadir</small></a>
+    <a class="qc" href="{{ links.lkpd }}" target="_blank" rel="noopener"><span class="qt">LATIHAN</span><i>🧩</i><b>LKPD</b><small>Kerjakan soal</small></a>
+    <a class="qc" href="{{ links.evaluasi }}" target="_blank" rel="noopener"><span class="qt">PENILAIAN</span><i>✅</i><b>Evaluasi</b><small>Uji pemahaman</small></a>
+    <button class="qc" data-t="tanya"><span class="qt">BANTUAN</span><i>🤖</i><b>Tanya AI</b><small>Tanya materi</small></button>
+  </div>
+  <div class="sl">Semua Modul</div>
+  <div class="ml" id="ml"></div>
+</section>
+
+<section id="t-panduan" class="tab">
+  <div class="card"><h2>📖 Panduan Penggunaan AI Pembelajaran</h2><p class="note">Dari mengenal AI Tutor sampai kesimpulan. Ketuk judul untuk membuka.</p></div>
+
+  <details class="acc" open><summary><span class="num">1</span>Mengenal AI Tutor</summary><div class="bd">
+    <p>AI Tutor adalah teman belajar untuk memahami materi teks berita. AI memberi penjelasan tambahan saat kamu belum paham.</p>
+    <p>Di dalamnya ada Beranda, Panduan, Modul Belajar, video, LKPD, evaluasi, dan Tanya AI. Ikuti urutannya agar belajar lebih terarah.</p></div></details>
+
+  <details class="acc"><summary><span class="num">2</span>Tujuan Penggunaan</summary><div class="bd"><ol>
+    <li>Memahami pengertian, struktur, unsur, dan kaidah kebahasaan berita.</li><li>Belajar mandiri kapan saja lewat HP.</li>
+    <li>Berlatih lewat LKPD dan mengukur pemahaman lewat evaluasi.</li><li>Mendapat bantuan tambahan dari Tanya AI.</li></ol></div></details>
+
+  <details class="acc"><summary><span class="num">3</span>Alur Pembelajaran</summary><div class="bd"><div class="tbl"><table>
+    <tr><th>Tahap</th><th>Kegiatan</th><th>Tujuan</th></tr>
+    <tr><td>1</td><td>Isi absen (Google Form).</td><td>Mencatat kehadiran.</td></tr>
+    <tr><td>2</td><td>Baca Modul secara berurutan.</td><td>Memahami materi berita.</td></tr>
+    <tr><td>3</td><td>Tonton video contoh penyiaran berita.</td><td>Memperkuat pemahaman.</td></tr>
+    <tr><td>4</td><td>Kerjakan LKPD.</td><td>Melatih penerapan materi.</td></tr>
+    <tr><td>5</td><td>Kerjakan Evaluasi.</td><td>Mengetahui hasil belajar.</td></tr>
+    <tr><td>6</td><td>Gunakan Tanya AI bila masih bingung.</td><td>Penjelasan tambahan.</td></tr></table></div>
+    <a class="btn" href="{{ links.absen }}" target="_blank" rel="noopener">📝 Isi Absen</a></div></details>
+
+  <details class="acc"><summary><span class="num">4</span>Cara Membuka AI Tutor</summary><div class="bd"><ol>
+    <li>Buka browser (Chrome, Safari, dll.) di HP atau laptop.</li><li>Masukkan alamat web yang diberikan guru.</li>
+    <li>Masuk dengan akunmu, atau daftar jika belum punya.</li><li>Kamu akan masuk ke dashboard siswa. Mulai dari Panduan.</li></ol></div></details>
+
+  <details class="acc"><summary><span class="num">5</span>Cara Menggunakan Modul Belajar</summary><div class="bd"><ol>
+    <li>Ketuk menu <b>Modul</b>.</li><li>Pilih bagian di baris atas, atau tekan Berikutnya.</li><li>Baca materi sampai selesai dan perhatikan contoh.</li>
+    <li>Catat istilah yang belum dipahami.</li><li>Centang "Saya sudah menyelesaikan bagian ini" agar progresmu tercatat.</li></ol>
+    <div class="tip">💡 Kalau ada bagian sulit, tandai dulu lalu tanyakan ke AI setelah mencoba memahaminya.</div></div></details>
+
+  <details class="acc"><summary><span class="num">6</span>Cara Mengikuti Video Pembelajaran</summary><div class="bd"><ol>
+    <li>Buka bagian <b>Contoh &amp; Video</b> pada Modul lalu ketuk tombol video.</li><li>Tonton sampai selesai.</li>
+    <li>Cari unsur 5W+1H dan struktur berita dalam video.</li><li>Catat minimal tiga hal baru yang kamu pahami.</li></ol></div></details>
+
+  <details class="acc"><summary><span class="num">7</span>Cara Mengerjakan LKPD</summary><div class="bd"><ol>
+    <li>Ketuk menu LKPD (Beranda atau Modul).</li><li>Baca petunjuk dan setiap soal dengan teliti.</li><li>Jawab berdasarkan materi yang sudah dipelajari.</li>
+    <li>Periksa kembali sebelum dikumpulkan.</li><li>Jika kesulitan, minta penjelasan AI, bukan sekadar jawabannya.</li></ol>
+    <a class="btn alt" href="{{ links.lkpd }}" target="_blank" rel="noopener">🧩 Buka LKPD</a></div></details>
+
+  <details class="acc"><summary><span class="num">8</span>Cara Menggunakan Evaluasi</summary><div class="bd"><ol>
+    <li>Pastikan materi dan LKPD sudah dipelajari.</li><li>Baca soal dengan teliti dan kerjakan sendiri.</li><li>Periksa jawaban sebelum selesai.</li>
+    <li>Lihat bagian yang masih perlu dipelajari ulang.</li></ol>
+    <a class="btn alt" href="{{ links.evaluasi }}" target="_blank" rel="noopener">✅ Buka Evaluasi</a></div></details>
+
+  <details class="acc"><summary><span class="num">9</span>Cara Menggunakan Tanya AI</summary><div class="bd"><ol>
+    <li>Buka menu <b>Tanya AI</b>.</li><li>Ketik pertanyaan yang jelas, atau pilih contoh pertanyaan.</li><li>Ketuk Kirim dan baca jawabannya.</li>
+    <li>Jika belum paham, ubah kata kunci atau tanyakan hal yang lebih spesifik.</li><li>Coba jelaskan ulang dengan kata-katamu sendiri.</li></ol>
+    <p class="note">AI hanya menjawab dari materi pada modul.</p></div></details>
+
+  <details class="acc" id="pd10"><summary><span class="num">10</span>Contoh Pertanyaan kepada AI</summary><div class="bd">
+    <p class="note">Ketuk salah satu pertanyaan: otomatis ditempel dan kamu diarahkan ke Tanya AI.</p>
+    <div class="chips">
+      <button class="aq" data-q="Apa pengertian berita?">Apa pengertian berita?</button>
+      <button class="aq" data-q="Apa saja unsur 5W+1H dalam berita?">Apa saja unsur 5W+1H dalam berita?</button>
+      <button class="aq" data-q="Jelaskan struktur berita">Jelaskan struktur berita</button>
+      <button class="aq" data-q="Apa yang dimaksud orientasi berita?">Apa yang dimaksud orientasi berita?</button>
+      <button class="aq" data-q="Apa saja kaidah kebahasaan berita?">Apa saja kaidah kebahasaan berita?</button>
+      <button class="aq" data-q="Apa itu kalimat langsung dalam berita?">Apa itu kalimat langsung dalam berita?</button>
+      <button class="aq" data-q="Apa saja jenis berita?">Apa saja jenis berita?</button>
+      <button class="aq" data-q="Bagaimana cara membuat berita?">Bagaimana cara membuat berita?</button>
+      <button class="aq" data-q="Apa itu konjungsi temporal?">Apa itu konjungsi temporal?</button>
+      <button class="aq" data-q="Bagaimana cara menghindari bias dalam berita?">Bagaimana cara menghindari bias dalam berita?</button>
+    </div></div></details>
+
+  <details class="acc"><summary><span class="num">11</span>Cara Bertanya agar Jawaban Jelas</summary><div class="bd"><div class="tbl"><table>
+    <tr><th>Pertanyaan baik ✅</th><th>Kurang jelas ❌</th></tr>
+    <tr><td>Apa saja unsur 5W+1H dalam berita?</td><td>Jelaskan ini.</td></tr>
+    <tr><td>Jelaskan struktur berita satu per satu.</td><td>Saya tidak mengerti.</td></tr>
+    <tr><td>Apa perbedaan berita langsung dan berita opini?</td><td>Apa itu?</td></tr>
+    <tr><td>Bagaimana cara menulis judul berita?</td><td>Buat berita.</td></tr></table></div></div></details>
+
+  <details class="acc"><summary><span class="num">12</span>Contoh dari Awal sampai Selesai</summary><div class="bd">
+    <p><b>Masuk</b> → buka web dan login.<br><b>Absen</b> → isi Google Form.<br><b>Modul</b> → baca materi berurutan.<br><b>Video</b> → tonton dan catat.<br>
+    <b>LKPD</b> → kerjakan latihan.<br><b>Evaluasi</b> → ukur pemahaman.<br><b>Tanya AI</b> → tanyakan yang belum paham.<br><b>Cek kembali</b> → jelaskan ulang dengan katamu sendiri.</p></div></details>
+
+  <details class="acc"><summary><span class="num">13</span>Tips Menggunakan AI Tutor</summary><div class="bd"><ol>
+    <li>Baca materi dulu sebelum bertanya.</li><li>Coba kerjakan soal sendiri sebelum minta bantuan.</li><li>Pakai AI untuk memahami, bukan menyalin jawaban.</li>
+    <li>Catat poin penting dari jawaban AI.</li><li>Bertanya dengan sopan dan jelas.</li><li>Tanya guru jika jawaban AI berbeda dengan penjelasan guru.</li>
+    <li>Jangan memasukkan data pribadi atau kata sandi.</li></ol></div></details>
+
+  <details class="acc"><summary><span class="num">14</span>Hal yang Perlu Diperhatikan</summary><div class="bd">
+    <p>AI Tutor adalah alat bantu, bukan pengganti guru. Tetap baca modul, ikuti penjelasan guru, dan kerjakan tugas dengan jujur.</p>
+    <p>Pertanyaan yang kamu kirim ke Tanya AI dapat dilihat guru. Jika jawaban tidak sesuai, bandingkan dengan modul dan tanyakan kepada guru.</p></div></details>
+
+  <details class="acc"><summary><span class="num">15</span>Panduan Singkat untuk Guru</summary><div class="bd"><ol>
+    <li>Jelaskan bahwa AI adalah pendamping belajar.</li><li>Minta siswa mengikuti urutan kegiatan.</li><li>Arahkan siswa membaca modul sebelum bertanya ke AI.</li>
+    <li>Pantau progres dan pertanyaan siswa lewat Dashboard Guru.</li><li>Gunakan hasil evaluasi untuk menentukan bagian yang perlu diulang.</li></ol></div></details>
+
+  <details class="acc"><summary><span class="num">16</span>Panduan Cepat</summary><div class="bd">
+    <p class="flow">MASUK → ABSEN → MODUL → VIDEO → LKPD → EVALUASI → TANYA AI → CEK KEMBALI</p></div></details>
+
+  <details class="acc"><summary><span class="num">17</span>Kesimpulan</summary><div class="bd">
+    <p>AI Tutor membantu kamu belajar teks berita secara terarah dan mandiri. Mulailah dari panduan, pelajari modul, tonton video, kerjakan LKPD dan evaluasi, lalu gunakan Tanya AI untuk memperjelas bagian yang belum dipahami.</p>
+    <p>Tetaplah berpikir sendiri, belajar dengan jujur, dan jadikan guru sebagai sumber utama untuk memastikan pemahamanmu.</p>
+    <button class="btn" data-t="modul">Mulai belajar →</button></div></details>
+</section>
+
+<section id="t-modul" class="tab"><div class="card mc"><h2>📚 Modul Belajar</h2><div class="mods" id="mods"></div><div id="isi"></div></div></section>
+
+<section id="t-tanya" class="tab"><div class="card"><h2>🤖 Tanya AI</h2><p class="note">Menjawab khusus dari materi modul. Pertanyaanmu dapat dilihat guru.</p>
+  <div id="chat" class="card"><div class="m a">Halo! Aku tutor pendamping materi Berita 🌱 Tanyakan apa saja dari modul.</div></div>
+  <div class="chips" id="chips"></div><div class="ask"><input id="q" placeholder="Ketik pertanyaanmu..." enterkeyhint="send"><button class="btn" id="kirim">Kirim</button></div></div></section>
+{% endblock %}
+{% block sbfoot %}<div class="sbf"><small>PROGRES BELAJAR</small><div class="bar"><i id="sbp"></i></div><small id="sbt"></small></div>{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='materi.js') }}"></script>
+<script>
+var LINK={{ links|tojson }}, done={}; {{ done|tojson }}.forEach(function(x){done[x]=1});
+var cur=0;
+function prog(){var n=MOD.filter(function(m){return done[m.id]}).length,p=Math.round(n/MOD.length*100);
+  $("sbp").style.width=p+"%";$("sbt").textContent=n+" dari "+MOD.length+" bagian selesai ("+p+"%)";
+  $("ml").innerHTML=MOD.map(function(m,i){return '<button class="mr" data-i="'+i+'"><span class="fi">'+(done[m.id]?"✅":"📄")+'</span><b>'+esc(m.t)+'</b><span class="st'+(done[m.id]?" ok":"")+'">'+(done[m.id]?"Selesai":"Belum")+'</span><span class="mm">'+m.b.length+' subbagian</span></button>'}).join("");
+  $("ml").querySelectorAll(".mr").forEach(function(b){b.onclick=function(){cur=+b.dataset.i;render();showTab("modul")}})}
+function render(){
+  var m=MOD[cur],h="";
+  $("mods").innerHTML=MOD.map(function(x,i){return '<button data-i="'+i+'" class="'+(i===cur?"on":"")+'">'+(done[x.id]?"✓ ":"")+esc(x.t)+"</button>"}).join("");
+  h+="<h2>"+esc(m.t)+"</h2>";
+  m.b.forEach(function(p){h+="<h3>"+esc(p[0])+"</h3><p>"+esc(p[1]).replace(/\n/g,"<br>")+"</p>"});
+  if(m.link&&LINK[m.link])h+='<p><a class="btn" target="_blank" rel="noopener" href="'+esc(LINK[m.link])+'">'+m.lt+"</a></p>";
+  h+='<label class="ck"><input type="checkbox" id="ck"'+(done[m.id]?" checked":"")+'>Saya sudah menyelesaikan bagian ini</label>';
+  h+='<div class="nav"><button class="btn alt" id="pv"'+(cur?"":" disabled")+'>← Kembali</button><button class="btn" id="nx"'+(cur<MOD.length-1?"":" disabled")+'>Lanjut →</button></div>';
+  $("isi").innerHTML=h;
+  $("ck").onchange=function(){var c=this.checked;if(c)done[m.id]=1;else delete done[m.id];post("/api/progress",{modul:m.id,done:c});render()};
+  $("pv").onclick=function(){cur--;render();scrollTo(0,0)};$("nx").onclick=function(){cur++;render();scrollTo(0,0)};
+  $("mods").querySelectorAll("button").forEach(function(b){b.onclick=function(){cur=+b.dataset.i;render()}});
+  var a=$("mods").querySelector("button.on");if(a&&a.scrollIntoView)a.scrollIntoView({inline:"center",block:"nearest"});
+  prog();
+}
+render();
+$("cta").onclick=function(){var i=MOD.findIndex(function(m){return !done[m.id]});cur=i<0?0:i;render();showTab("modul")};
+var KB=[];MOD.forEach(function(m){m.b.forEach(function(p){KB.push({j:p[0],x:p[1],m:m.t})})});
+var SW="yang dan di ke dari pada dengan untuk dalam adalah itu ini atau apa bagaimana mengapa sebutkan jelaskan tentang suatu sebuah secara merupakan dapat akan sebagai oleh lebih juga tidak tersebut saya tolong berikan contoh dimaksud".split(" ");
+function kata(s){return s.toLowerCase().replace(/[^a-z0-9\s]/g," ").split(/\s+/).filter(function(w){return w.length>1&&SW.indexOf(w)<0})}
+function jawab(q){
+  var k=kata(q);if(!k.length)return "Tulis pertanyaan yang lebih jelas, misalnya: Apa saja unsur 5W+1H dalam berita?";
+  var hs=[];KB.forEach(function(e){var t=(e.j+" "+e.x).toLowerCase(),s=0;k.forEach(function(w){if(t.indexOf(w)>=0)s++;if(e.j.toLowerCase().indexOf(w)>=0)s+=3});if(s>0)hs.push({s:s,e:e})});
+  if(!hs.length)return "Maaf, aku belum menemukan hal itu di materi modul. Coba kata kunci lain, misalnya: pengertian, struktur, 5W+1H, kaidah kebahasaan, jenis berita, atau cara membuat berita. Kamu juga bisa bertanya kepada guru.";
+  hs.sort(function(a,b){return b.s-a.s});
+  var r=hs[0].e.j+" (bagian "+hs[0].e.m+"):\n"+hs[0].e.x;if(hs[1])r+="\n\nBaca juga: "+hs[1].e.j+" pada bagian "+hs[1].e.m+".";return r;
+}
+function kirim(t){var q=(t||$("q").value).trim();if(!q)return;var c=$("chat");
+  c.insertAdjacentHTML("beforeend",'<div class="m u">'+esc(q)+"</div>");c.insertAdjacentHTML("beforeend",'<div class="m a">'+esc(jawab(q))+"</div>");
+  $("q").value="";c.scrollTop=c.scrollHeight;post("/api/tanya",{q:q})}
+$("kirim").onclick=function(){kirim()};$("q").onkeydown=function(e){if(e.key==="Enter")kirim()};
+["Apa pengertian berita?","Apa saja unsur 5W+1H?","Jelaskan struktur berita","Apa saja jenis berita?"].forEach(function(t){var b=document.createElement("button");b.textContent=t;b.onclick=function(){kirim(t)};$("chips").appendChild(b)});
+window.onSearch=function(v,enter){if(enter&&v.trim()){showTab("tanya");$("q").value=v.trim();$("q").focus()}};
+/* contoh pertanyaan di Panduan: tempel ke kolom Tanya AI lalu pindah ke sana */
+document.querySelectorAll(".aq").forEach(function(b){b.onclick=function(){showTab("tanya");$("q").value=b.dataset.q;$("q").focus();$("q").setSelectionRange(b.dataset.q.length,b.dataset.q.length)}});
+</script>
+{% endblock %}

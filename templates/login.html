@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1d5fd0"><title>{{ 'Daftar' if mode=='register' else 'Masuk' }} – AI Tutor Bahasa Indonesia</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body style="background:#2d6bd1">
+<div class="au"><div class="wrap">
+  <div class="aul"><div class="wl">Selamat datang di</div><div class="logo">🌱</div><h2>AI Tutor Bahasa Indonesia</h2>
+    <p>Belajar teks berita dengan modul, latihan, dan teman belajar AI. Mudah diakses lewat HP.</p></div>
+  <div class="aur">
+    <h3>{{ 'Buat akun kamu' if mode=='register' else 'Masuk ke akunmu' }}</h3>
+    {% for c,m in get_flashed_messages(with_categories=true) %}<div class="flash {{c}}">{{m}}</div>{% endfor %}
+    {% if mode=='login' %}
+    <form method="post"><label>Username</label><input name="username" required autocomplete="username" autocapitalize="none" placeholder="Masukkan username">
+      <label>Password</label><input name="password" type="password" required autocomplete="current-password" placeholder="Masukkan password">
+      <div class="row"><button class="pill p">Masuk</button><a class="pill" href="{{ url_for('register') }}">Daftar</a></div></form>
+    {% else %}
+    <form method="post"><label>Daftar sebagai</label>
+      <select name="role" id="role"><option value="siswa">Siswa</option><option value="guru">Guru</option></select>
+      <label>Nama lengkap</label><input name="nama" required maxlength="60" placeholder="Masukkan nama">
+      <label>Username</label><input name="username" required maxlength="30" autocomplete="username" autocapitalize="none" placeholder="Masukkan username">
+      <label>Password (min. 6 karakter)</label><input name="password" type="password" required minlength="6" autocomplete="new-password" placeholder="Masukkan password">
+      <div id="kg" style="display:none"><label>Kode guru</label><input name="kode" autocomplete="off" placeholder="Kode dari sekolah"></div>
+      <div class="row"><button class="pill p">Daftar</button><a class="pill" href="{{ url_for('login') }}">Masuk</a></div></form>
+    <script>var r=document.getElementById("role");r.onchange=function(){document.getElementById("kg").style.display=r.value==="guru"?"block":"none"}</script>
+    {% endif %}
+  </div></div></div></body></html>
