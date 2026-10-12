@@ -1,0 +1,10 @@
+{% if ident.kelompok or ident.anggota %}
+<footer class="idf">
+  <img src="{{ url_for('static', filename='logo.svg') }}" alt="" width="34" height="34">
+  <div>
+    <b>AI Tutor Bahasa Indonesia · Materi Teks Berita</b>
+    <span>{% if ident.kelompok %}{{ ident.kelompok }}{% endif %}{% if ident.kelas or ident.institusi %} · {{ [ident.kelas, ident.institusi]|select|join(' · ') }}{% endif %}</span>
+    {% if ident.anggota %}<small>Anggota: {{ ident.anggota|join(', ') }}</small>{% endif %}
+  </div>
+</footer>
+{% endif %}
