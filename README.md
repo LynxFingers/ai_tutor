@@ -28,7 +28,8 @@
 - `app.py` – aplikasi Flask (entrypoint Vercel), `db.py` – akses data ke Supabase
 - `templates/` – halaman, `public/static/` – CSS dan materi.js (disajikan Vercel dari `public/`)
 - Link absen/LKPD/evaluasi/video/rubrik: bagian KONFIGURASI di `app.py`
-- Isi materi: `public/static/materi.js`
+- Isi materi: `public/static/materi.js` (14 bagian, disusun dari Modul Ajar Teks Berita)
+- Video berita: ganti tautan `LINKS["video"]` di `app.py`; video otomatis diputar langsung di Modul > Contoh & Video (dan lewat kartu "Video Berita" di Beranda). Pastikan pemilik video mengizinkan penyematan (embed); jika tidak, tombol "Buka di YouTube" tetap tersedia.
 
 ## Catatan keamanan
 - Tabel memakai Row Level Security tanpa policy: hanya server (secret key) yang bisa membaca/menulis.

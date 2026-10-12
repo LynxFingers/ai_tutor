@@ -1,4 +1,5 @@
 import os
+import re
 from functools import wraps
 from flask import (Flask, render_template, request, redirect, url_for,
                    session, flash, jsonify, abort)
@@ -26,8 +27,15 @@ LINKS = {
 }
 SISWA_ITEMS = [("beranda", "🏠", "Beranda"), ("panduan", "📖", "Panduan"), ("modul", "📚", "Modul"), ("tanya", "🤖", "Tanya AI")]
 GURU_ITEMS = [("ringkasan", "🏠", "Ringkasan"), ("kelas", "👥", "Isi Kelas"), ("tanya", "💬", "Pertanyaan"), ("rubrik", "📊", "Rubrik")]
-MODUL_IDS = ["pengertian", "struktur", "unsur", "kaidah", "jenis", "cara", "contoh", "lkpd", "evaluasi"]
+MODUL_IDS = ["tujuan", "pengertian", "struktur", "unsur", "kaidah", "jenis", "faktaopini", "cara",
+             "bandingkan", "pengalaman", "etika", "contoh", "lkpd", "evaluasi"]
 # ===============================================
+
+
+def youtube_id(url):
+    """Ambil ID video dari tautan YouTube (youtu.be, watch?v=, embed/, shorts/)."""
+    m = re.search(r"(?:youtu\.be/|v=|/embed/|/shorts/)([A-Za-z0-9_-]{11})", url or "")
+    return m.group(1) if m else ""
 
 # static_folder di public/static agar sama dengan yang disajikan Vercel (/static/...)
 app = Flask(__name__, static_folder=os.path.join(BASE, "public", "static"), static_url_path="/static")
@@ -131,7 +139,7 @@ def logout():
 @role_required("siswa")
 def siswa(u):
     extra = [("📝", "Absen", LINKS["absen"]), ("🧩", "LKPD", LINKS["lkpd"]), ("✅", "Evaluasi", LINKS["evaluasi"])]
-    return render_template("siswa.html", user=u, done=db.done_modul(u["id"]),
+    return render_template("siswa.html", user=u, video_id=youtube_id(LINKS["video"]), done=db.done_modul(u["id"]),
                            links={k: v for k, v in LINKS.items() if k != "rubrik"}, items=SISWA_ITEMS,
                            extra=extra, cta=("Lanjutkan Belajar", "modul"),
                            title="Belajar Berita", subtitle="Dashboard Siswa")

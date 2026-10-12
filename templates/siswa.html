@@ -7,6 +7,7 @@
     <a class="qc hot" href="{{ links.absen }}" target="_blank" rel="noopener"><span class="qt">GOOGLE FORM</span><i>📝</i><b>Absen</b><small>Isi daftar hadir</small></a>
     <a class="qc" href="{{ links.lkpd }}" target="_blank" rel="noopener"><span class="qt">LATIHAN</span><i>🧩</i><b>LKPD</b><small>Kerjakan soal</small></a>
     <a class="qc" href="{{ links.evaluasi }}" target="_blank" rel="noopener"><span class="qt">PENILAIAN</span><i>✅</i><b>Evaluasi</b><small>Uji pemahaman</small></a>
+    <button class="qc" id="qvid"><span class="qt">TONTON</span><i>▶️</i><b>Video Berita</b><small>Putar di sini</small></button>
     <button class="qc" data-t="tanya"><span class="qt">BANTUAN</span><i>🤖</i><b>Tanya AI</b><small>Tanya materi</small></button>
   </div>
   <div class="sl">Semua Modul</div>
@@ -44,8 +45,8 @@
     <div class="tip">💡 Kalau ada bagian sulit, tandai dulu lalu tanyakan ke AI setelah mencoba memahaminya.</div></div></details>
 
   <details class="acc"><summary><span class="num">6</span>Cara Mengikuti Video Pembelajaran</summary><div class="bd"><ol>
-    <li>Buka bagian <b>Contoh &amp; Video</b> pada Modul lalu ketuk tombol video.</li><li>Tonton sampai selesai.</li>
-    <li>Cari unsur 5W+1H dan struktur berita dalam video.</li><li>Catat minimal tiga hal baru yang kamu pahami.</li></ol></div></details>
+    <li>Buka bagian <b>Contoh &amp; Video</b> pada Modul. Video langsung bisa diputar di halaman ini (ketuk tombol layar penuh untuk tampilan lebih besar).</li><li>Tonton sampai selesai.</li>
+    <li>Cari unsur 5W+1H dan struktur berita dalam video, lalu bedakan fakta dan opininya.</li><li>Catat minimal tiga hal baru yang kamu pahami.</li></ol></div></details>
 
   <details class="acc"><summary><span class="num">7</span>Cara Mengerjakan LKPD</summary><div class="bd"><ol>
     <li>Ketuk menu LKPD (Beranda atau Modul).</li><li>Baca petunjuk dan setiap soal dengan teliti.</li><li>Jawab berdasarkan materi yang sudah dipelajari.</li>
@@ -75,6 +76,9 @@
       <button class="aq" data-q="Bagaimana cara membuat berita?">Bagaimana cara membuat berita?</button>
       <button class="aq" data-q="Apa itu konjungsi temporal?">Apa itu konjungsi temporal?</button>
       <button class="aq" data-q="Bagaimana cara menghindari bias dalam berita?">Bagaimana cara menghindari bias dalam berita?</button>
+      <button class="aq" data-q="Apa perbedaan fakta dan opini?">Apa perbedaan fakta dan opini?</button>
+      <button class="aq" data-q="Bagaimana cara menilai akurasi berita?">Bagaimana cara menilai akurasi berita?</button>
+      <button class="aq" data-q="Bagaimana cara mengaitkan berita dengan pengalaman pribadi?">Bagaimana cara mengaitkan berita dengan pengalaman pribadi?</button>
     </div></div></details>
 
   <details class="acc"><summary><span class="num">11</span>Cara Bertanya agar Jawaban Jelas</summary><div class="bd"><div class="tbl"><table>
@@ -120,7 +124,7 @@
 {% block script %}
 <script src="{{ url_for('static', filename='materi.js') }}"></script>
 <script>
-var LINK={{ links|tojson }}, done={}; {{ done|tojson }}.forEach(function(x){done[x]=1});
+var LINK={{ links|tojson }}, VID={{ video_id|tojson }}, done={}; {{ done|tojson }}.forEach(function(x){done[x]=1});
 var cur=0;
 function prog(){var n=MOD.filter(function(m){return done[m.id]}).length,p=Math.round(n/MOD.length*100);
   $("sbp").style.width=p+"%";$("sbt").textContent=n+" dari "+MOD.length+" bagian selesai ("+p+"%)";
@@ -131,6 +135,7 @@ function render(){
   $("mods").innerHTML=MOD.map(function(x,i){return '<button data-i="'+i+'" class="'+(i===cur?"on":"")+'">'+(done[x.id]?"✓ ":"")+esc(x.t)+"</button>"}).join("");
   h+="<h2>"+esc(m.t)+"</h2>";
   m.b.forEach(function(p){h+="<h3>"+esc(p[0])+"</h3><p>"+esc(p[1]).replace(/\n/g,"<br>")+"</p>"});
+  if(m.video&&VID)h+='<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(VID)+'?rel=0" title="Video berita" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><p class="note">Video tidak tampil atau tidak bisa diputar? Gunakan tombol di bawah untuk membukanya di YouTube.</p>';
   if(m.link&&LINK[m.link])h+='<p><a class="btn" target="_blank" rel="noopener" href="'+esc(LINK[m.link])+'">'+m.lt+"</a></p>";
   h+='<label class="ck"><input type="checkbox" id="ck"'+(done[m.id]?" checked":"")+'>Saya sudah menyelesaikan bagian ini</label>';
   h+='<div class="nav"><button class="btn alt" id="pv"'+(cur?"":" disabled")+'>← Kembali</button><button class="btn" id="nx"'+(cur<MOD.length-1?"":" disabled")+'>Lanjut →</button></div>';
@@ -142,14 +147,15 @@ function render(){
   prog();
 }
 render();
+$("qvid").onclick=function(){cur=MOD.findIndex(function(m){return m.video});if(cur<0)cur=0;render();showTab("modul")};
 $("cta").onclick=function(){var i=MOD.findIndex(function(m){return !done[m.id]});cur=i<0?0:i;render();showTab("modul")};
 var KB=[];MOD.forEach(function(m){m.b.forEach(function(p){KB.push({j:p[0],x:p[1],m:m.t})})});
-var SW="yang dan di ke dari pada dengan untuk dalam adalah itu ini atau apa bagaimana mengapa sebutkan jelaskan tentang suatu sebuah secara merupakan dapat akan sebagai oleh lebih juga tidak tersebut saya tolong berikan contoh dimaksud".split(" ");
+var SW="yang dan di ke dari pada dengan untuk dalam adalah itu ini atau apa bagaimana mengapa sebutkan jelaskan tentang suatu sebuah secara merupakan dapat akan sebagai oleh lebih juga tidak tersebut saya tolong berikan contoh dimaksud berita cara saja mengaitkan".split(" ");
 function kata(s){return s.toLowerCase().replace(/[^a-z0-9\s]/g," ").split(/\s+/).filter(function(w){return w.length>1&&SW.indexOf(w)<0})}
 function jawab(q){
   var k=kata(q);if(!k.length)return "Tulis pertanyaan yang lebih jelas, misalnya: Apa saja unsur 5W+1H dalam berita?";
-  var hs=[];KB.forEach(function(e){var t=(e.j+" "+e.x).toLowerCase(),s=0;k.forEach(function(w){if(t.indexOf(w)>=0)s++;if(e.j.toLowerCase().indexOf(w)>=0)s+=3});if(s>0)hs.push({s:s,e:e})});
-  if(!hs.length)return "Maaf, aku belum menemukan hal itu di materi modul. Coba kata kunci lain, misalnya: pengertian, struktur, 5W+1H, kaidah kebahasaan, jenis berita, atau cara membuat berita. Kamu juga bisa bertanya kepada guru.";
+  var hs=[];KB.forEach(function(e){var t=(e.j+" "+e.x+" "+e.m).toLowerCase(),s=0;k.forEach(function(w){if(t.indexOf(w)>=0)s++;if(e.j.toLowerCase().indexOf(w)>=0)s+=6;if(e.m.toLowerCase().indexOf(w)>=0)s+=3});if(s>0)hs.push({s:s,e:e})});
+  if(!hs.length)return "Maaf, aku belum menemukan hal itu di materi modul. Coba kata kunci lain, misalnya: pengertian, struktur, 5W+1H, kaidah kebahasaan, jenis berita, fakta dan opini, akurasi berita, atau cara membuat berita. Kamu juga bisa bertanya kepada guru.";
   hs.sort(function(a,b){return b.s-a.s});
   var r=hs[0].e.j+" (bagian "+hs[0].e.m+"):\n"+hs[0].e.x;if(hs[1])r+="\n\nBaca juga: "+hs[1].e.j+" pada bagian "+hs[1].e.m+".";return r;
 }
@@ -157,7 +163,7 @@ function kirim(t){var q=(t||$("q").value).trim();if(!q)return;var c=$("chat");
   c.insertAdjacentHTML("beforeend",'<div class="m u">'+esc(q)+"</div>");c.insertAdjacentHTML("beforeend",'<div class="m a">'+esc(jawab(q))+"</div>");
   $("q").value="";c.scrollTop=c.scrollHeight;post("/api/tanya",{q:q})}
 $("kirim").onclick=function(){kirim()};$("q").onkeydown=function(e){if(e.key==="Enter")kirim()};
-["Apa pengertian berita?","Apa saja unsur 5W+1H?","Jelaskan struktur berita","Apa saja jenis berita?"].forEach(function(t){var b=document.createElement("button");b.textContent=t;b.onclick=function(){kirim(t)};$("chips").appendChild(b)});
+["Apa pengertian berita?","Apa saja unsur 5W+1H?","Apa perbedaan fakta dan opini?","Bagaimana cara menilai akurasi berita?"].forEach(function(t){var b=document.createElement("button");b.textContent=t;b.onclick=function(){kirim(t)};$("chips").appendChild(b)});
 window.onSearch=function(v,enter){if(enter&&v.trim()){showTab("tanya");$("q").value=v.trim();$("q").focus()}};
 /* contoh pertanyaan di Panduan: tempel ke kolom Tanya AI lalu pindah ke sana */
 document.querySelectorAll(".aq").forEach(function(b){b.onclick=function(){showTab("tanya");$("q").value=b.dataset.q;$("q").focus();$("q").setSelectionRange(b.dataset.q.length,b.dataset.q.length)}});
