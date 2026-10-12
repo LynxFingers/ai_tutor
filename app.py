@@ -26,7 +26,7 @@ LINKS = {
     "rubrik": "https://docs.google.com/spreadsheets/d/1G6E7D106PlvNTO9iNGTfg36TtFcboKACJXY6XF-Wp_Y/edit?usp=drivesdk",  # khusus guru
 }
 SISWA_ITEMS = [("beranda", "🏠", "Beranda"), ("panduan", "📖", "Panduan"), ("modul", "📚", "Modul"), ("tanya", "🤖", "Tanya AI")]
-GURU_ITEMS = [("ringkasan", "🏠", "Ringkasan"), ("kelas", "👥", "Isi Kelas"), ("tanya", "💬", "Pertanyaan"), ("rubrik", "📊", "Rubrik")]
+GURU_ITEMS = [("ringkasan", "🏠", "Ringkasan"), ("pelaksanaan", "📋", "Modul Ajar"), ("kelas", "👥", "Isi Kelas"), ("tanya", "💬", "Pertanyaan"), ("rubrik", "📊", "Rubrik")]
 MODUL_IDS = ["tujuan", "pengertian", "struktur", "unsur", "kaidah", "jenis", "faktaopini", "cara",
              "bandingkan", "pengalaman", "etika", "contoh", "lkpd", "evaluasi"]
 # ===============================================
