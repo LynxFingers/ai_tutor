@@ -25,6 +25,14 @@ LINKS = {
     "video": "https://youtu.be/VAJgnAw1jmk?si=HJIrL7Ng4ctAmrQW",
     "rubrik": "https://docs.google.com/spreadsheets/d/1G6E7D106PlvNTO9iNGTfg36TtFcboKACJXY6XF-Wp_Y/edit?usp=drivesdk",  # khusus guru
 }
+# Identitas kelompok: tampil di halaman login, dashboard siswa, dan dashboard guru.
+# Kosongkan salah satu isian (mis. "kelas": "") jika tidak ingin ditampilkan.
+IDENTITAS = {
+    "kelompok": "Kelompok ...",                 # contoh: "Kelompok 3"
+    "anggota": ["Nama Anggota 1", "Nama Anggota 2", "Nama Anggota 3"],
+    "kelas": "Kelas ...",                       # contoh: "PBI 5A"
+    "institusi": "Nama Sekolah / Kampus ...",
+}
 SISWA_ITEMS = [("beranda", "🏠", "Beranda"), ("panduan", "📖", "Panduan"), ("modul", "📚", "Modul"), ("tanya", "🤖", "Tanya AI")]
 GURU_ITEMS = [("ringkasan", "🏠", "Ringkasan"), ("pelaksanaan", "📋", "Modul Ajar"), ("kelas", "👥", "Isi Kelas"), ("tanya", "💬", "Pertanyaan"), ("rubrik", "📊", "Rubrik")]
 MODUL_IDS = ["tujuan", "pengertian", "struktur", "unsur", "kaidah", "jenis", "faktaopini", "cara",
@@ -45,6 +53,11 @@ app.secret_key = os.environ.get("SECRET_KEY") or "kunci-lokal-hanya-untuk-uji-co
 app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="Lax",
                   SESSION_COOKIE_SECURE=bool(os.environ.get("VERCEL")),
                   PERMANENT_SESSION_LIFETIME=60 * 60 * 24 * 30)
+
+
+@app.context_processor
+def inject_identitas():
+    return {"ident": IDENTITAS}
 
 
 @app.errorhandler(db.DBError)
