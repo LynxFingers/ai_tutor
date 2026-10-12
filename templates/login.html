@@ -1,10 +1,14 @@
 <!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#1d5fd0"><title>{{ 'Daftar' if mode=='register' else 'Masuk' }} – AI Tutor Bahasa Indonesia</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='logo.svg') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body style="background:#2d6bd1">
 <div class="au"><div class="wrap">
-  <div class="aul"><div class="wl">Selamat datang di</div><div class="logo">🌱</div><h2>AI Tutor Bahasa Indonesia</h2>
-    <p>Belajar teks berita dengan modul, latihan, dan teman belajar AI. Mudah diakses lewat HP.</p></div>
+  <div class="aul"><div class="wl">Selamat datang di</div><div class="logo"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Logo AI Tutor"></div><h2>AI Tutor Bahasa Indonesia</h2>
+    <p>Belajar teks berita dengan modul, latihan, dan teman belajar AI. Mudah diakses lewat HP.</p>
+    {% if ident.kelompok or ident.anggota %}<div class="idb"><small>DIKEMBANGKAN OLEH</small><b>{{ ident.kelompok }}</b>
+      {% if ident.kelas or ident.institusi %}<span>{{ [ident.kelas, ident.institusi]|select|join(' · ') }}</span>{% endif %}
+      {% if ident.anggota %}<ul>{% for a in ident.anggota %}<li>{{ a }}</li>{% endfor %}</ul>{% endif %}</div>{% endif %}</div>
   <div class="aur">
     <h3>{{ 'Buat akun kamu' if mode=='register' else 'Masuk ke akunmu' }}</h3>
     {% for c,m in get_flashed_messages(with_categories=true) %}<div class="flash {{c}}">{{m}}</div>{% endfor %}
