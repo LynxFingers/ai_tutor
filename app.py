@@ -28,10 +28,10 @@ LINKS = {
 # Identitas kelompok: tampil di halaman login, dashboard siswa, dan dashboard guru.
 # Kosongkan salah satu isian (mis. "kelas": "") jika tidak ingin ditampilkan.
 IDENTITAS = {
-    "kelompok": "Kelompok ...",                 # contoh: "Kelompok 3"
-    "anggota": ["Nama Anggota 1", "Nama Anggota 2", "Nama Anggota 3"],
-    "kelas": "Kelas ...",                       # contoh: "PBI 5A"
-    "institusi": "Nama Sekolah / Kampus ...",
+    "kelompok": "Kelompok E",
+    "anggota": [],       # contoh: ["Nama 1", "Nama 2"]
+    "kelas": "",         # contoh: "PBI 5A"
+    "institusi": "",     # contoh: "Nama Sekolah / Kampus"
 }
 SISWA_ITEMS = [("beranda", "🏠", "Beranda"), ("panduan", "📖", "Panduan"), ("modul", "📚", "Modul"), ("tanya", "🤖", "Tanya AI")]
 GURU_ITEMS = [("ringkasan", "🏠", "Ringkasan"), ("pelaksanaan", "📋", "Modul Ajar"), ("kelas", "👥", "Isi Kelas"), ("tanya", "💬", "Pertanyaan"), ("rubrik", "📊", "Rubrik")]
