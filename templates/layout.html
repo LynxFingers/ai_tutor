@@ -3,11 +3,11 @@
 <meta name="theme-color" content="#1d5fd0"><title>{{ subtitle }} – AI Tutor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='logo.svg') }}">
+<link rel="icon" href="{{ url_for('static', filename='logo.png') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body>
 <div class="app">
 <aside class="side">
-  <div class="brand"><span class="logo"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Logo"></span><div><b>AI Tutor</b><small>Materi Berita</small></div></div>
+  <div class="brand"><span class="logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"></span><div><b>AI Tutor</b><small>Materi Berita</small></div></div>
   <button class="cta" id="cta" data-t="{{ cta[1] }}">{{ cta[0] }}</button>
   <nav class="sn">
     {% for id,ic,lb in items %}<button class="ni{{ ' on' if loop.first }}" data-t="{{ id }}"><span>{{ ic }}</span>{{ lb }}</button>{% endfor %}
@@ -20,7 +20,7 @@
 </aside>
 <div class="main">
   <header class="tbar">
-    <div class="mb"><span class="logo"><img src="{{ url_for('static', filename='logo.svg') }}" alt="Logo"></span><b>AI Tutor</b></div>
+    <div class="mb"><span class="logo"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"></span><b>AI Tutor</b></div>
     <label class="search"><span>🔍</span><input id="gs" type="search" placeholder="{{ 'Cari siswa...' if user.role=='guru' else 'Tanya atau cari materi...' }}" enterkeyhint="search"></label>
     <div class="usr"><div class="un"><b>{{ user.nama.split()[0] }}</b><small>{{ user.role|capitalize }}</small></div><div class="av">{{ user.nama[0]|upper }}</div>
       <a class="outb" href="{{ url_for('logout') }}" onclick="return confirm('Yakin ingin keluar?')">Keluar</a></div>
